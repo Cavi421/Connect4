@@ -11,48 +11,48 @@ class PlayerInputValidatorClass(ValidatorClass):
     """
 
     def CheckInput(self, player_input: int) -> bool:
-        if not self.IsEmpty(player_input):
-            return False
-        if not self.IsInt(player_input):
-            return False
+        self.choosen_column = player_input
 
-        # After IsInt check, column is stored as INT type to avoid converting from string it each time
-        if not self.IsPositiveInt(player_input):
+        if not self.IsEmpty():
             return False
-        if not self.IsChoosenColumnInBound(player_input):
+        if not self.IsInt():
+            return False
+        if not self.IsPositiveInt():
+            return False
+        if not self.IsChoosenColumnInBound():
             return False
 
         return True
 
-    def IsEmpty(self, choosen_column: int) -> bool:
-        if choosen_column == "":
-            print("Choose value is empty, try again")
+    def IsEmpty(self) -> bool:
+        if self.choosen_column == "":
+            print("Warning: Choose value is empty, try again")
             return False
 
         else:
             return True
 
-    def IsInt(self, choosen_column: int) -> bool:
+    def IsInt(self) -> bool:
         try:
-            self.choosen_column = int(choosen_column)
+            self.choosen_column = int(self.choosen_column)
             return True
 
-        except Exception as e:
-            print(e)
-            print("Input choosen is not a number, try again")
+        except ValueError as e:
+            #print(e)
+            print("Warning: Input choosen is not an Integer number, try again")
             return False
 
-    def IsPositiveInt(self, choosen_column: int) -> bool:
+    def IsPositiveInt(self) -> bool:
         if self.choosen_column < 0:
-            print("Column Number is negative, try again")
+            print("Warning: Column number can't be negative, try again")
             return False
 
         else:
             return True
 
-    def IsChoosenColumnInBound(self, choosen_column: int) -> bool:
+    def IsChoosenColumnInBound(self) -> bool:
         if self.choosen_column <= 0 or self.choosen_column >= 8:
-            print("Wrong column number. Column should be between 1 and 7")
+            print("Warning: Wrong column number,it should be between 1 and 7")
             return False
 
         else:

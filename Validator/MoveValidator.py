@@ -1,6 +1,7 @@
 from Board.Board import BoardClass
 from Validator.Validator import ValidatorClass
 from Utility.Utility import UtilityClass
+from Player.Player import PlayerClass
 
 class MoveValidatorClass(ValidatorClass):
     """
@@ -10,11 +11,14 @@ class MoveValidatorClass(ValidatorClass):
     -Check if the move can be done
     """
 
-    def CheckMove(self, column_choosen: int, Board: BoardClass) -> bool:
+    def CheckMove(self, column_choosen: int, Board: BoardClass, player: PlayerClass) -> bool:
         
 
-        if not self.CheckIfColumnIsNotFull(column_choosen, Board): 
-            print("This column is full, try another one")
+        if not self.CheckIfColumnIsNotFull(column_choosen, Board):
+
+            if not player.isAI:
+                print("Warning: This column is full, try again")
+                
             return False
         
         
@@ -27,7 +31,6 @@ class MoveValidatorClass(ValidatorClass):
         Utility = UtilityClass()
 
         if Utility.ScanMatrixColumnToSeeIfIsNotFull(column_choosen, Board) == False:
-            print("Couldn't place token here, column is already full. Choose another column")
             return False
         
         return True

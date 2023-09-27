@@ -8,11 +8,12 @@ class HumanClass(PlayerClass):
 
     def SetName(self):
         self.name = f"Player n{self.id}"
+        self.isAI = False
 
 
 
     def ThinkMove(self, Board: BoardClass) -> int:
-        #### VALIDATE USER INPUT ####
+
 
         PlayerInputValidator = PlayerInputValidatorClass()
 
@@ -21,7 +22,7 @@ class HumanClass(PlayerClass):
 
 
         while not is_input_correct or not is_move_correct:
-            self.choosen_column = input("Select a column to place the Token")
+            self.choosen_column = input("SELECT a column number where to place the Token: ")
 
             is_input_correct = PlayerInputValidator.CheckInput(self.choosen_column)
 
@@ -42,7 +43,7 @@ class HumanClass(PlayerClass):
 
             #### VALIDATE IF A MOVE IS CORRECT using Validator ####
             MoveValidator = MoveValidatorClass()
-            is_move_correct = MoveValidator.CheckMove(self.choosen_column , Board)
+            is_move_correct = MoveValidator.CheckMove(self.choosen_column , Board, self)
 
 
         return self.choosen_column

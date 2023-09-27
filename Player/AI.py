@@ -8,6 +8,7 @@ class AIClass(PlayerClass):
 
     def SetName(self):
         self.name = f"AI n{self.id}"
+        self.isAI = True
 
 
     def ThinkMove(self, Board: BoardClass) -> int:
@@ -27,6 +28,6 @@ class AIClass(PlayerClass):
 
             random_column = randint(0,6)
 
-            is_move_valid =  MoveValidator.CheckMove(random_column, Board)
+            is_move_valid =  MoveValidator.CheckMove(random_column, Board, self)
 
         return random_column
