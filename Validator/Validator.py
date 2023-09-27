@@ -2,7 +2,6 @@ from Board.Board import BoardClass
 
 class ValidatorClass():
 
-
     """
     This class will perform a serious of checks
     to validate:
@@ -11,5 +10,6 @@ class ValidatorClass():
     """
 
     def __init__(self):
-        pass
+        
+        self.stop_adding = False
 

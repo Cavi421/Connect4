@@ -16,6 +16,9 @@ class MoveValidatorClass(ValidatorClass):
         if not self.CheckIfColumnIsNotFull(column_choosen, Board): 
             print("This column is full, try another one")
             return False
+        
+        
+        return True
 
 
 

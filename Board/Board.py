@@ -13,12 +13,6 @@ class BoardClass:
 
         self.matrix_board = [[0 for i in range(0,7)] for j in range(0,6)]
 
-        print(self.matrix_board)
-
-        #test positions
-        self.matrix_board[5][0] = 1
-        self.matrix_board[5][6] = 2
-
 
         self.UpdateBoard()
 
@@ -29,12 +23,12 @@ class BoardClass:
         a human readable format using strings + print
         """
 
-        print("\n"*20)
+        #print("\n"*20)
 
         converted_board = ""
 
         converted_board += (
-            "--|  1   |   2   |   3   |   4   |   5   |   6   |   7   |\n"
+            "--|  0   |   1   |   2   |   3   |   4   |   5   |   6   |\n"
         )
 
         for row_index, row in enumerate(self.matrix_board):
@@ -59,10 +53,13 @@ class BoardClass:
 
 
 
-    def AddToken(self: object, choosen_column: int, player: PlayerClass):
+    def AddToken(self: object, choosen_column: int, player: PlayerClass) -> tuple:
         empty_position_row_id = self.ComputeTokenPosition(choosen_column)
 
         self.matrix_board[empty_position_row_id][choosen_column] = player.id
+
+        #Position of the token in a tuple
+        return (empty_position_row_id, choosen_column)
         
 
 
@@ -72,9 +69,6 @@ class BoardClass:
         to place the token(it can't float around, it needs to have another token below or being at row 0)
         """
         Utility = UtilityClass()
-
-        print(choosen_column, "ComputeTokenPosition")
-
 
         empty_position_row_id = Utility.ScanMatrixColumnForEmptyPositionId(choosen_column, self)
 

@@ -6,6 +6,9 @@ from Validator.MoveValidator import MoveValidatorClass
 
 class HumanClass(PlayerClass):
 
+    def SetName(self):
+        self.name = f"Player n{self.id}"
+
 
 
     def ThinkMove(self, Board: BoardClass) -> int:
@@ -17,7 +20,7 @@ class HumanClass(PlayerClass):
         is_move_correct = False
 
 
-        while not is_input_correct and not is_move_correct:
+        while not is_input_correct or not is_move_correct:
             self.choosen_column = input("Select a column to place the Token")
 
             is_input_correct = PlayerInputValidator.CheckInput(self.choosen_column)

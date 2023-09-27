@@ -9,7 +9,7 @@ class UtilityClass:
         # The numbers inserted inside range are for scanning in reversed order, starting from the bottom
         for row_index in range(5, -1, -1):
 
-            print(row_index, choosen_column)
+            #print(row_index, choosen_column)
 
             # Token can be added because there is an empty slot
             if Board.matrix_board[row_index][choosen_column] == 0:
