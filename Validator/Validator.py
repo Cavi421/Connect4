@@ -10,6 +10,5 @@ class ValidatorClass():
     """
 
     def __init__(self):
-        
-        self.stop_adding = False
+        pass
 

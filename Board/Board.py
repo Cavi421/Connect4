@@ -28,7 +28,7 @@ class BoardClass:
         converted_board = ""
 
         converted_board += (
-            "--|  0   |   1   |   2   |   3   |   4   |   5   |   6   |\n"
+            "--|  1   |   2   |   3   |   4   |   5   |   6   |   7   |\n"
         )
 
         for row_index, row in enumerate(self.matrix_board):
