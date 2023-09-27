@@ -3,10 +3,8 @@ from Board.Board import BoardClass
 class ValidatorClass():
 
     """
-    This class will perform a serious of checks
-    to validate:
-    -if the value inserted by the player is of the correct type(int)
-    -Check if the move can be done
+    Validators parent class in case something needs to
+    be added in the future.
     """
 
     def __init__(self):

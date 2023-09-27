@@ -3,7 +3,7 @@ class UtilityClass:
         self: object, choosen_column: int, Board: object
     ) -> int:
         """
-        Given a column, this method scans it and return the first empty position.
+        Given a column, this method scans it and return the first empty position as row_index
         """
         # Scan every row and then the specific column
         # The numbers inserted inside range are for scanning in reversed order, starting from the bottom

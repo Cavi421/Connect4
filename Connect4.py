@@ -7,18 +7,15 @@ from random import randint
 
 class Connect4Class:
     def __init__(self: object) -> None:
-
-
-        #Randomize who goes first
-        if randint(1,2) == 1:
+        # Randomize who goes first
+        if randint(1, 2) == 1:
             self.player1 = AIClass(1)
-            self.player2 = HumanClass(2)
+            self.player2 = AIClass(2)
         else:
-            self.player1 = HumanClass(1)
-            self.player2 = AIClass(2) 
+            self.player1 = AIClass(1)
+            self.player2 = AIClass(2)
 
         self.game_ended = False
-
 
     def StartGame(self: object) -> None:
         self.Board = BoardClass()
@@ -39,8 +36,6 @@ class Connect4Class:
                 break
 
             print("-------------------------------------\n")
-
-
 
             # -------------------------------------
             # PLAYER 2 TURN

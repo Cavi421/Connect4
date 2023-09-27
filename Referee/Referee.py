@@ -2,18 +2,16 @@ from Board.Board import BoardClass
 
 
 class RefereeClass:
-    def __init__(self):
-        pass
-
     def HorizontalCheckWin(
-        self, Board: BoardClass, last_move: tuple, player: object
+        self: object, Board: BoardClass, last_move: tuple, player: object
     ) -> bool:
         """
-        The algo to check the win condition works like this:
-        Given the last move, it'll check on the left and on the right additional tokens
-        beloging to the same player using 2 for loops one for left and one for right.
-        If it finds a token who is from a different player then it'll stop searching on that direction.
-        Win condition is achieved when it finds at least 4 connected tokens.
+        The algorithm to check the win condition works like this:
+        Given the last move, it'll check for additional tokens
+        belonging to the same player using two for loops, one for left scan and one for right.
+        If it finds a token that is from a different player, then it'll stop searching in that direction.
+        The win condition is achieved when it finds at least 4 connected tokens.
+        It can be improved.
         """
 
         row_last_move, column_last_move = last_move
@@ -22,16 +20,19 @@ class RefereeClass:
         # It doesn't start empty because in this way we can skip a loop iteration
         # for the first element which is the last_move token and it's always counted
         board_values_to_check = [player.id]
-        cells_to_convert_in_winning_line = [last_move]
-    
 
-        # Right loop
-        # column_last_move +1 because in this way we exclude the first element which is the
-        # last_move_token
+        # This list is used to highlight the winning line changing the player's id to "!!"
+        # It contains a list of tuples
+        cells_to_convert_in_winning_line = [last_move]
+
+        # Right loop that scan using the offset from the last_move_position
+        # column_last_move +1 because in this way we exclude the first element which is the last_move_token
+        # which has been already added to the list above
+
         for number_of_right_scans, r_offset in enumerate(
             range(column_last_move + 1, 7)
         ):
-            # If finds another token then it stops scanning
+            # If finds another token different from the current's player id then it stops scanning on the right
             if Board.matrix_board[row_last_move][r_offset] != player.id:
                 break
 
@@ -40,12 +41,15 @@ class RefereeClass:
             if number_of_right_scans >= 3:
                 break
 
+            # Append to this list if it finds another token equale to the player's id
             board_values_to_check.append(Board.matrix_board[row_last_move][r_offset])
-            cells_to_convert_in_winning_line.append(
-                (row_last_move, r_offset)
-            )
 
-        # Left loop same as above
+            # Append if the cell(tuple) belong to the same player's id
+            cells_to_convert_in_winning_line.append((row_last_move, r_offset))
+
+        # Left loop is the same of the right loop with the various variables changed accordingly
+        # range goes backwards because it's on the left and scan until reaches 0.
+        # on the function -1 is passed because is excluded. So it'll stop at column 0
         for number_of_left_scans, l_offset in enumerate(
             range(column_last_move - 1, -1, -1)
         ):
@@ -57,11 +61,9 @@ class RefereeClass:
 
             board_values_to_check.append(Board.matrix_board[row_last_move][l_offset])
 
-            cells_to_convert_in_winning_line.append(
-                (row_last_move, l_offset)
-            )
+            cells_to_convert_in_winning_line.append((row_last_move, l_offset))
 
-        # If it finds more than 4 connected tokens then it's a win
+        # If it finds more than 4 connected tokens then it's a win and returns True
         # Connection is ensured on the above checks
         if len((board_values_to_check)) >= 4:
             self.ConvertCellsIntoWinningLine(Board, cells_to_convert_in_winning_line)
@@ -71,14 +73,16 @@ class RefereeClass:
             False
 
     def VerticalCheckWin(
-        self, Board: BoardClass, last_move: tuple, player: object
+        self: object, Board: BoardClass, last_move: tuple, player: object
     ) -> bool:
         """
-        The algo to check the win condition works like this:
-        Given the last move, it'll check on the left and on the right additional tokens
-        beloging to the same player using 2 for loops one for left and one for right.
-        If it finds a token who is from a different player then it'll stop searching on that direction.
-        Win condition is achieved when it finds at least 4 connected tokens.
+        Same as the HorizontalCheckWin but scan vertically.
+        The algorithm to check the win condition works like this:
+        Given the last move, it'll check for additional tokens
+        belonging to the same player using two for loops, one scanning above and the other below the last_move.
+        If it finds a token that is from a different player, then it'll stop searching in that direction.
+        The win condition is achieved when it finds at least 4 connected tokens.
+        It can be improved.
         """
 
         row_last_move, column_last_move = last_move
@@ -86,7 +90,9 @@ class RefereeClass:
         board_values_to_check = [player.id]
         cells_to_convert_in_winning_line = [last_move]
 
-        # Lower scans
+        # Lower scans. range is increasing because the upmost row has a index of 0
+        # the lowest row instead has an index of 5
+        # Logic is the same as the HorizontalCheckWin
         for number_of_lower_scans, lower_offset in enumerate(
             range(row_last_move + 1, 6)
         ):
@@ -103,11 +109,11 @@ class RefereeClass:
                 Board.matrix_board[lower_offset][column_last_move]
             )
 
-            cells_to_convert_in_winning_line.append(
-                (lower_offset, column_last_move)
-            )
+            cells_to_convert_in_winning_line.append((lower_offset, column_last_move))
 
-        # Upper scans
+        # Upper scans. range is decreasing because the upmost row has a index of 0
+        # the lowest row instead has an index of 5
+        # Logic is the same as HorizontalCheckWin
         for number_of_upper_scans, u_offset in enumerate(
             range(row_last_move - 1, -1, -1)
         ):
@@ -122,9 +128,7 @@ class RefereeClass:
 
             board_values_to_check.append(Board.matrix_board[u_offset][column_last_move])
 
-            cells_to_convert_in_winning_line.append(
-                (u_offset, column_last_move)
-            )
+            cells_to_convert_in_winning_line.append((u_offset, column_last_move))
 
         # print(Board.matrix_board[row_last_move][column_last_move], f"(r:{row_last_move}, c:{column_last_move})")
         # print(cells_to_convert_in_winning_line)
@@ -136,12 +140,30 @@ class RefereeClass:
         else:
             False
 
-        # Down Scans
 
     # \
-    def DiagonalCheckLeft(
-        self, Board: BoardClass, last_move: tuple, player: object
+    def DiagonalCheckLeftWin(
+        self: object, Board: BoardClass, last_move: tuple, player: object
     ) -> bool:
+        
+
+        """
+        Ascending Diagonal '\'
+        Same as the HorizontalCheckWin but scan diagonally.
+        The algorithm to check the win condition works like this:
+        Given the last move, it'll check for additional tokens
+        belonging to the same player using two for loops:
+        -one scanning above and on the left, starting from last_move position
+        -second one is scanning vertically below and on the right, starting from last_move position
+        If it finds a token that is from a different player, then it'll stop searching in that direction.
+        The win condition is achieved when it finds at least 4 connected tokens.
+        It can be improved.
+        """
+
+
+        # Main difference between this and HorizontalCheckWin
+        # is the offset's check for the outbound columns
+
         row_last_move, column_last_move = last_move
         board_values_to_check = [player.id]
         cells_to_convert_in_winning_line = [last_move]
@@ -159,7 +181,7 @@ class RefereeClass:
             max_column_id = 6
             if (column_last_move_plus_right_offset) > max_column_id:
                 break
-
+            
             if (
                 Board.matrix_board[lower_offset][column_last_move_plus_right_offset]
                 != player.id
@@ -172,7 +194,9 @@ class RefereeClass:
             board_values_to_check.append(
                 Board.matrix_board[lower_offset][column_last_move_plus_right_offset]
             )
-            cells_to_convert_in_winning_line.append((lower_offset, column_last_move_plus_right_offset))
+            cells_to_convert_in_winning_line.append(
+                (lower_offset, column_last_move_plus_right_offset)
+            )
 
         # Upper Left Scans
         # Needs to reach the 0th row, so it's going backwards until -1 excluded
@@ -216,9 +240,24 @@ class RefereeClass:
             False
 
     # /
-    def DiagonalCheckRight(
-        self, Board: BoardClass, last_move: tuple, player: object
+    def DiagonalCheckRightWin(
+        self: object, Board: BoardClass, last_move: tuple, player: object
     ) -> bool:
+        
+
+        """
+        Ascending Diagonal '/'
+        Same as the HorizontalCheckWin but scan diagonally.
+        The algorithm to check the win condition works like this:
+        Given the last move, it'll check for additional tokens
+        belonging to the same player using two for loops:
+        -one scanning below and on the left, starting from last_move position
+        -second one is scanning vertically above and on the right, starting from last_move position
+        If it finds a token that is from a different player, then it'll stop searching in that direction.
+        The win condition is achieved when it finds at least 4 connected tokens.
+        It can be improved.
+        """
+
         row_last_move, column_last_move = last_move
         board_values_to_check = [player.id]
         cells_to_convert_in_winning_line = [last_move]
@@ -293,7 +332,7 @@ class RefereeClass:
             False
 
     def ConvertCellsIntoWinningLine(
-        self, Board: BoardClass, cells_to_convert_in_winning_line: list[tuple]
+        self: object, Board: BoardClass, cells_to_convert_in_winning_line: list[tuple]
     ) -> None:
         for cell in cells_to_convert_in_winning_line:
             row_id, column_id = cell
@@ -312,11 +351,11 @@ class RefereeClass:
             print(f"Player {player.id} won: VERTICAL WIN")
             return True
 
-        if self.DiagonalCheckLeft(Board, last_move, player):
+        if self.DiagonalCheckLeftWin(Board, last_move, player):
             print(f"Player {player.id} won: LEFT DIAGONAL")
             return True
 
-        if self.DiagonalCheckRight(Board, last_move, player):
+        if self.DiagonalCheckRightWin(Board, last_move, player):
             print(f"Player {player.id} won: RIGHT DIAGONAL")
             return True
 
@@ -324,8 +363,8 @@ class RefereeClass:
 
     def IsGameDraw(self, Board: BoardClass) -> bool:
         """
-        Method used to check if a match is draw
-        Check if there are no zeroes in the upmost row
+        Method used to check if a match is a draw.
+        Check if there are no zeroes in the topmost row.
         """
 
         if not 0 in Board.matrix_board[0]:

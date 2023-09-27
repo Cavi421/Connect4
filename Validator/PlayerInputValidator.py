@@ -4,10 +4,10 @@ from Validator.Validator import ValidatorClass
 
 class PlayerInputValidatorClass(ValidatorClass):
     """
-    This class will perform a serious of checks
-    to validate:
-    -if the value inserted by the player is of the correct type(int)
-    -Check if the move can be done
+    This class will perform a series of sanity checks to make sure
+    that the human's player input is an INT between 1 and 7
+    If not returns False and the method which called this one
+    will keep looping.
     """
 
     def CheckInput(self, player_input: int) -> bool:
@@ -22,6 +22,7 @@ class PlayerInputValidatorClass(ValidatorClass):
         if not self.IsChoosenColumnInBound():
             return False
 
+        #If all the checks pass then return True
         return True
 
     def IsEmpty(self) -> bool:
