@@ -7,6 +7,10 @@ from Validator.MoveValidator import MoveValidatorClass
 class HumanClass(PlayerClass):
     def SetName(self:object) -> None:
         self.name = f"Player n{self.id}"
+        self.d_tokens = {
+            1: "O",
+            2: "X"
+        }
 
     def SetIfAI(self:object) -> None:
         self.isAI = False
@@ -26,7 +30,7 @@ class HumanClass(PlayerClass):
         #If both the input and the move are correct, the loop is considered finished.
         while not is_input_correct or not is_move_correct:
             self.choosen_column = input(
-                "SELECT a column number where to place the Token: "
+                f"SELECT a column number where to place the Token '{self.d_tokens[self.id]}': "
             )
 
             # Check if the inuput is an INT

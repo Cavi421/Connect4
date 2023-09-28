@@ -8,7 +8,7 @@ class BoardClass:
         # Generate the 6x7 matrix using nested list comprehension
         # instead of hard coding it
         self.matrix_board = [[0 for i in range(0, 7)] for j in range(0, 6)]
-        self.UpdateBoard()
+        #self.UpdateBoard()
 
     def UpdateBoard(self: object) -> None:
         """
@@ -20,6 +20,8 @@ class BoardClass:
         converted_board += "--|  1  |  2  |  3  |  4  |  5  |  6  |  7  |\n"
 
         for row_index, row in enumerate(self.matrix_board):
+
+            #Left numbers indicating rows (useful for debugging)
             converted_board += (
                 f"---------------------------------------------\n{row_index} |  "
             )
@@ -40,6 +42,7 @@ class BoardClass:
                 if column_index == 6:
                     converted_board += "\n"
 
+        print("\n")
         print(converted_board)
 
     def AddToken(self: object, choosen_column: int, player: PlayerClass) -> tuple:
@@ -68,5 +71,4 @@ class BoardClass:
         )
 
         # Insert additional checks here
-
         return empty_position_row_id

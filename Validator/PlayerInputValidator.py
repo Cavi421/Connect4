@@ -13,7 +13,7 @@ class PlayerInputValidatorClass(ValidatorClass):
     def CheckInput(self, player_input: int) -> bool:
         self.choosen_column = player_input
 
-        if not self.IsEmpty():
+        if not self.IsNotEmpty():
             return False
         if not self.IsInt():
             return False
@@ -25,7 +25,7 @@ class PlayerInputValidatorClass(ValidatorClass):
         #If all the checks pass then return True
         return True
 
-    def IsEmpty(self) -> bool:
+    def IsNotEmpty(self) -> bool:
         if self.choosen_column == "":
             print("Warning: Choose value is empty, try again")
             return False
@@ -34,14 +34,37 @@ class PlayerInputValidatorClass(ValidatorClass):
             return True
 
     def IsInt(self) -> bool:
-        try:
-            self.choosen_column = int(self.choosen_column)
-            return True
+        """
+        isdigit returns True if it's an integer.
+        Doesn't work with neg integers.
+        Using isdigit because if you use int() on a
+        string that represents a float if gets truncated
+        e.g. "1.2" becomes 1
+        """
 
-        except ValueError as e:
-            #print(e)
-            print("Warning: Input choosen is not an Integer number, try again")
-            return False
+        #Signed integers
+        if self.choosen_column[0] in ["+","-"]:
+            
+            #Don't consider the first letter of the string + or -
+            if self.choosen_column[1:].isdigit():
+                self.choosen_column = int(self.choosen_column)
+                return True
+            
+            else:
+                print("Warning: Input choosen is not an Integer number, try again")
+                return False
+        
+        #Unsigned integers
+        else:
+
+            if self.choosen_column.isdigit():
+                self.choosen_column = int(self.choosen_column)
+                return True
+            
+            else:
+                print("Warning: Input choosen is not an Integer number, try again")
+                return False
+        
 
     def IsPositiveInt(self) -> bool:
         if self.choosen_column < 0:

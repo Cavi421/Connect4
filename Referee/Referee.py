@@ -11,7 +11,7 @@ class RefereeClass:
         belonging to the same player using two for loops, one for left scan and one for right.
         If it finds a token that is from a different player, then it'll stop searching in that direction.
         The win condition is achieved when it finds at least 4 connected tokens.
-        It can be improved.
+        It can be improved using 1 single loop?.
         """
 
         row_last_move, column_last_move = last_move
@@ -69,8 +69,7 @@ class RefereeClass:
             self.ConvertCellsIntoWinningLine(Board, cells_to_convert_in_winning_line)
             return True
 
-        else:
-            False
+        return False
 
     def VerticalCheckWin(
         self: object, Board: BoardClass, last_move: tuple, player: object
@@ -137,8 +136,8 @@ class RefereeClass:
             self.ConvertCellsIntoWinningLine(Board, cells_to_convert_in_winning_line)
             return True
 
-        else:
-            False
+
+        return False
 
 
     # \
@@ -236,8 +235,7 @@ class RefereeClass:
             self.ConvertCellsIntoWinningLine(Board, cells_to_convert_in_winning_line)
             return True
 
-        else:
-            False
+        return False
 
     # /
     def DiagonalCheckRightWin(
@@ -328,8 +326,8 @@ class RefereeClass:
             self.ConvertCellsIntoWinningLine(Board, cells_to_convert_in_winning_line)
             return True
 
-        else:
-            False
+
+        return False
 
     def ConvertCellsIntoWinningLine(
         self: object, Board: BoardClass, cells_to_convert_in_winning_line: list[tuple]
