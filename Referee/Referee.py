@@ -11,7 +11,7 @@ class RefereeClass:
         belonging to the same player using two for loops, one for left scan and one for right.
         If it finds a token that is from a different player, then it'll stop searching in that direction.
         The win condition is achieved when it finds at least 4 connected tokens.
-        It can be improved using 1 single loop?.
+        It can be improved using 1 single loop.
         """
 
         row_last_move, column_last_move = last_move
@@ -78,10 +78,9 @@ class RefereeClass:
         Same as the HorizontalCheckWin but scan vertically.
         The algorithm to check the win condition works like this:
         Given the last move, it'll check for additional tokens
-        belonging to the same player using two for loops, one scanning above and the other below the last_move.
-        If it finds a token that is from a different player, then it'll stop searching in that direction.
+        belonging to the same player using one for loop scanning below the last_move.
+        If it finds a token that is from a different player, then it'll stop searching.
         The win condition is achieved when it finds at least 4 connected tokens.
-        It can be improved.
         """
 
         row_last_move, column_last_move = last_move
@@ -110,27 +109,6 @@ class RefereeClass:
 
             cells_to_convert_in_winning_line.append((lower_offset, column_last_move))
 
-        # Upper scans. range is decreasing because the upmost row has a index of 0
-        # the lowest row instead has an index of 5
-        # Logic is the same as HorizontalCheckWin
-        for number_of_upper_scans, u_offset in enumerate(
-            range(row_last_move - 1, -1, -1)
-        ):
-            # If finds another token then it stops scanning
-            if Board.matrix_board[u_offset][column_last_move] != player.id:
-                break
-
-            # The algo checks max 3 position away from last_move position
-            # number_of_scans is the current for loop iteration number
-            if number_of_upper_scans >= 3:
-                break
-
-            board_values_to_check.append(Board.matrix_board[u_offset][column_last_move])
-
-            cells_to_convert_in_winning_line.append((u_offset, column_last_move))
-
-        # print(Board.matrix_board[row_last_move][column_last_move], f"(r:{row_last_move}, c:{column_last_move})")
-        # print(cells_to_convert_in_winning_line)
 
         if len((board_values_to_check)) >= 4:
             self.ConvertCellsIntoWinningLine(Board, cells_to_convert_in_winning_line)
