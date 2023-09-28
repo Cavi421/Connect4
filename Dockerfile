@@ -15,8 +15,6 @@ FROM python:3.9.18-slim-bullseye
 
 
 
-
-
 #### Final Version that download the code from Github and executes it
 RUN apt-get update && \
     apt-get upgrade -y && \
