@@ -1,21 +1,21 @@
 FROM python:3.9.18-slim-bullseye
-#FROM python:3.9.18-bullseye
 
 #Unit-tests Dockerfile
+#To run tests uncomment here
 #COPY . /app
 #WORKDIR /app
 #CMD ["python3", "-m", "unittest", "discover", "-b"]
 
 
 
-#Development Dockerfile
+#Development Dockerfile and Final Version. Leave this one uncommented
 COPY . /app
 WORKDIR /app
 ENTRYPOINT ["python3","-u", "run.py"]
 
 
 
-#### Final Version that download the code from Github and executes it, problems with dockerignore
+#### This one gave me problems with dockerignore
 #RUN apt-get update && \
 #    apt-get upgrade -y && \
 #    apt-get install -y git
