@@ -18,6 +18,7 @@ class AIClass(PlayerClass):
         """
 
         random_column = self.AICalculateRandomPositionToAddToken(Board)
+        
 
         return random_column
 

@@ -334,6 +334,7 @@ class RefereeClass:
         if self.DiagonalCheckRightWin(Board, last_move, player):
             print(f"Player {player.id} won: RIGHT DIAGONAL")
             return True
+        
 
         return False
 
